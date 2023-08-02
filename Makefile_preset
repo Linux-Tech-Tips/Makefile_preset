@@ -102,14 +102,21 @@ endif
 
 .PHONY: $(DIR_TARGET), $(COMPILE_TARGET), $(LINK_TARGET), $(RUN_TARGET), $(DOCS_TARGET), $(CLEAN_TARGET), $(HELP_TARGET)
 
-# SOURCE_DIR is not made, expected to already exist
+# SOURCE_DIR is not made, but expected to already exist
 # If not specifically forbidden, creates the dependency targets directory as well
-$(DIR_TARGET):
-	$(MKDIR_COMMAND) $(BUILD_DIR)
-	$(MKDIR_COMMAND) $(DOCS_DIR)
-ifneq ($(NO_DEPS), true)
-	$(MKDIR_COMMAND) $(DEPS_DIR)
+ifneq ($(NO_DEPS),true)
+$(DIR_TARGET): $(BUILD_DIR) $(DOCS_DIR) $(DEPS_DIR) | $(SRC_DIR)
+else
+$(DIR_TARGET): $(BUILD_DIR) $(DOCS_DIR) | $(SRC_DIR)
 endif
+
+# Specific directory targets
+$(BUILD_DIR):
+	$(MKDIR_COMMAND) $(BUILD_DIR)
+$(DOCS_DIR):
+	$(MKDIR_COMMAND) $(DOCS_DIR)
+$(DEPS_DIR):
+	$(MKDIR_COMMAND) $(DEPS_DIR)
 
 $(COMPILE_TARGET): $(OBJECTS)
 

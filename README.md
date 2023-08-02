@@ -35,8 +35,8 @@ The configurable variables are as follows:
  - __OUTFILE__ ... The name of the output executable file - **needs to be configured**
 
 ### Compiler and linker programs
- - __CC__ ... The C/C++ compiler program; the default is *gcc*
- - __LD__ ... The C/C++ linker program; the default is *gcc*
+ - __CC__ ... The C/C++ compiler program; the default is *gcc* - **should be changed if C++ (or other languages) used**
+ - __LD__ ... The C/C++ linker program; the default is *gcc* - **should be changed if C++ (or other languages) used**
 
 ### C/C++ Language settings
  - __SOURCE_EXT__ ... The file extension of source files - **should be changed if C++ (or other language) used**; the default is *c*
