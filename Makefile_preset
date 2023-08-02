@@ -1,10 +1,10 @@
 # C/C++ Makefile Preset
 # -
-# Created by Linux-Tech-Tips (Martin), more at github.com/Linux-Tech-Tips
+# Created by Linux-Tech-Tips (Martin), more at https://github.com/Linux-Tech-Tips
 # -
 # Feel free to use this for any projects, please credit me if you do
 # -
-# Documentation about the configuration of this file can be found at ()
+# Documentation about the configuration of this file can be found at (https://github.com/Linux-Tech-Tips/Makefile_preset.git)
 # -
 # NO WARRANTY
 
@@ -12,13 +12,13 @@
 
 # USER-DEFINED SECTION OF THE CODE
 
+# General project settings
 PROJECT_NAME := # PRESET - SPECIFY YOUR PROJECT NAME
+OUTFILE := # PRESET - SPECIFY YOUR OUTPUT EXECUTABLE NAME
 
-# C/C++ Compiler and linker
+# Compiler and linker programs
 CC := gcc
 LD := gcc
-
-OUTFILE := # PRESET - SPECIFY YOUR OUTPUT EXECUTABLE NAME
 
 # C/C++ Language settings
 SOURCE_EXT := c
@@ -33,14 +33,12 @@ DEP_TARGET_FLAG := -MT
 
 # Directories
 BUILD_DIR := build
-SOURCE_DIR := src
+SOURCE_DIR := # PRESET - SPECIFY YOUR PROJECT SOURCE FOLDER
 DEPS_DIR := .dependencies
 DOCS_DIR := doxygen_doc
 
-# Default compiler flags
+# Additional compiler/linker flags
 CFLAGS := # PRESET - SPECIFY YOUR C/C++ COMPILER FLAGS
-
-# Default linker flags
 LDFLAGS := # PRESET - SPECIFY YOUR C/C++ LINKER FLAGS
 
 # Documentation
@@ -48,6 +46,7 @@ DOCS_SW := doxygen
 DOCS_CONF := Doxyfile
 
 # Makefile shell configuration
+SHELL := sh
 MKDIR_COMMAND := mkdir -p
 RM_COMMAND := rm -r
 ECHO_COMMAND := echo
@@ -60,7 +59,10 @@ RUN_TARGET := run
 DOCS_TARGET := doc
 CLEAN_TARGET := clean
 HELP_TARGET := help
-ALL_TARGET := dirs compile link
+ALL_TARGET := $(DIR_TARGET) $(COMPILE_TARGET) $(LINK_TARGET)
+
+# Additional help information
+USER_HELP := 
 
 
 # END OF USER-DEFINED SECTION OF THE CODE
@@ -129,7 +131,7 @@ ifneq ($(NO_DEPS), true)
 endif
 
 $(HELP_TARGET):
-	@$(ECHO_COMMAND) "$(PROJECT_NAME) Makefile: make [target] [options]"
+	@$(ECHO_COMMAND) "$(PROJECT_NAME) Makefile: usage: make [target] [options]"
 	@$(ECHO_COMMAND) "  - Available targets: $(DIR_TARGET), $(COMPILE_TARGET), $(LINK_TARGET), $(RUN_TARGET), $(DOCS_TARGET), $(CLEAN_TARGET), $(HELP_TARGET), all (default, calls: $(ALL_TARGET))"
 	@$(ECHO_COMMAND) "  - Available options:"
 	@$(ECHO_COMMAND) "    - address=true - turn on address sanitizer"
@@ -137,7 +139,11 @@ $(HELP_TARGET):
 	@$(ECHO_COMMAND) "  - Documentation information:"
 	@$(ECHO_COMMAND) "    - The target $(DOCS_TARGET) generates code documentation using $(DOCS_SW), which is output into the directory $(DOCS_DIR)"
 	@$(ECHO_COMMAND) ""
-	@$(ECHO_COMMAND) "Makefile preset created by Linux-Tech-Tips (Martin), more at github.com/Linux-Tech-Tips"
+ifneq ($(USER_HELP),)
+	@$(ECHO_COMMAND) $(USER_HELP)
+	@$(ECHO_COMMAND) ""
+endif
+	@$(ECHO_COMMAND) "Makefile preset created by Linux-Tech-Tips (Martin), more at https://github.com/Linux-Tech-Tips"
 
 
 -include $(DEPS_DIR)/*.$(DEPENDENCY_EXT)
